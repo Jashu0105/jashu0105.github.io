@@ -15,7 +15,7 @@ body{
     animation:introFade 2s ease forwards;
 }
 
-/* Cinematic Intro */
+/* Intro Fade */
 @keyframes introFade{
     from{opacity:0; transform:scale(1.05);}
     to{opacity:1; transform:scale(1);}
@@ -32,7 +32,7 @@ video.bg{
     filter:brightness(0.35) blur(2px);
 }
 
-/* Moving Glow Atmosphere */
+/* Rotating Glow */
 .overlay{
     position:fixed;
     inset:-50%;
@@ -121,7 +121,7 @@ button{
 }
 button:hover{transform:scale(1.1);}
 
-/* ===== ULTRA ATTRACTIVE FINAL TITLE ===== */
+/* Ultra Attractive Final Title */
 #final h2{
     font-size:56px;
     font-weight:800;
@@ -141,7 +141,6 @@ button:hover{transform:scale(1.1);}
         gradientShift 6s ease infinite,
         glowPulse 2.5s ease-in-out infinite alternate,
         titleScale 3s ease-in-out infinite alternate;
-    text-align:center;
 }
 @keyframes gradientShift{
     0%{background-position:0% 50%;}
@@ -175,35 +174,34 @@ button:hover{transform:scale(1.1);}
     line-height:2;
 }
 
-/* ECG Monitor */
+/* CLEAN ECG (No Cutting) */
 .ecg-container{
     position:absolute;
     width:100%;
-    height:250px;
+    height:220px;
     top:50%;
     transform:translateY(-50%);
-    overflow:hidden;
     z-index:-1;
     opacity:0.6;
 }
-.ecg-line{
-    position:absolute;
-    width:200%;
+.ecg-container svg{
+    width:100%;
     height:100%;
-    animation:ecgScroll 6s linear infinite;
 }
-@keyframes ecgScroll{
-    from{transform:translateX(0);}
-    to{transform:translateX(-50%);}
-}
-.ecg-line path{
+.ecg-container path{
     fill:none;
     stroke:#ff4d6d;
     stroke-width:3;
-    filter:drop-shadow(0 0 10px #ff4d6d);
+    filter:drop-shadow(0 0 12px #ff4d6d);
+    stroke-dasharray:1500;
+    stroke-dashoffset:1500;
+    animation:drawECG 3s linear infinite;
+}
+@keyframes drawECG{
+    to{ stroke-dashoffset:0; }
 }
 
-/* Continuous Heart Rain */
+/* Continuous Elegant Heart Rain */
 .heart-rain{
     position:fixed;
     inset:0;
@@ -274,11 +272,9 @@ width="320" height="152"></iframe>
 <!-- Final -->
 <div id="final" class="screen parallax">
 <div class="ecg-container">
-<div class="ecg-line">
 <svg viewBox="0 0 1000 200" preserveAspectRatio="none">
-<path d="M0 100 L80 100 L100 95 L120 105 L140 60 L160 150 L180 40 L200 100 L300 100 L380 95 L400 105 L420 60 L440 150 L460 40 L480 100 L1000 100"/>
+<path d="M0 100 L80 100 L100 95 L120 105 L140 60 L160 150 L180 40 L200 100 L260 100 L340 95 L360 105 L380 60 L400 150 L420 40 L440 100 L1000 100"/>
 </svg>
-</div>
 </div>
 
 <h2>💖 I Love You Beyond Forever 💖</h2>
@@ -303,7 +299,7 @@ show("giftScreen");
 function showFinal(){
 show("final");
 startHeartRain();
-let text="From the very first moment you entered my life, the world felt different. Softer. Warmer. Brighter. You are not just my Valentine — you are the rhythm behind every beat of my heart. Like the pulse rising and falling behind these words, my heart rises when I see you, falls when I miss you, and beats endlessly because of you. In every lifetime, every universe, every possible story that could ever exist — I would still choose you. Always you. Forever you.";
+let text="From the very first moment you entered my life, everything changed. The world softened, colors felt warmer, and my heart found a rhythm it never knew before. You are not just my Valentine — you are the pulse that keeps my heart alive. Like this heartbeat behind these words, my heart rises for you, falls for you, and beats endlessly because of you. In every lifetime, in every universe, in every story ever written — I would still choose you. Always you. Forever you.";
 let i=0;
 function type(){
 if(i<text.length){
