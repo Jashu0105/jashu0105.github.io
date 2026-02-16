@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Forever Yours</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+    color:white;
+    background:black;
+    animation:introFade 2s ease forwards;
+}
+
+/* Cinematic Intro */
+@keyframes introFade{
+    from{opacity:0; transform:scale(1.05);}
+    to{opacity:1; transform:scale(1);}
+}
+
+/* Background Video */
+video.bg{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-3;
+    filter:brightness(0.35) blur(2px);
+}
+
+/* Moving Glow Atmosphere */
+.overlay{
+    position:fixed;
+    inset:-50%;
+    background:radial-gradient(circle at center,
+        rgba(255,0,120,0.3),transparent 60%);
+    animation:rotateGlow 25s linear infinite;
+    z-index:-2;
+}
+@keyframes rotateGlow{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+/* Floating Particles */
+.particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+}
+.particle{
+    position:absolute;
+    width:3px;height:3px;
+    background:white;border-radius:50%;
+    opacity:0.6;
+    animation:float 12s linear infinite;
+}
+@keyframes float{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);}
+}
+
+/* Screens */
+.screen{
+    display:none;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:20px;
+    opacity:0;
+    transform:translateY(40px) scale(1.03);
+    transition:1.2s cubic-bezier(.17,.67,.83,.67);
+    perspective:1000px;
+}
+.screen.active{
+    display:flex;
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+.parallax{transition:transform 0.1s linear;}
+
+/* Glass UI */
+.glass, .spotify-card{
+    backdrop-filter:blur(30px);
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:30px;
+    padding:35px;
+    box-shadow:0 40px 120px rgba(0,0,0,0.7);
+}
+
+/* Gift */
+.gift{
+    width:160px;height:160px;
+    background:linear-gradient(145deg,#ff006e,#ff4d6d);
+    border-radius:25px;
+    box-shadow:0 35px 90px rgba(255,0,110,0.7);
+    animation:floatGift 4s ease-in-out infinite;
+    cursor:pointer;
+}
+@keyframes floatGift{
+    50%{transform:translateY(-30px);}
+}
+
+/* Buttons */
+button{
+    margin:12px;padding:14px 35px;
+    border:none;border-radius:40px;
+    background:linear-gradient(45deg,#ff006e,#ff4d6d);
+    color:white;font-size:16px;
+    cursor:pointer;
+    box-shadow:0 15px 35px rgba(255,0,110,0.6);
+    transition:0.4s;
+}
+button:hover{transform:scale(1.1);}
+
+/* ===== ULTRA ATTRACTIVE FINAL TITLE ===== */
+#final h2{
+    font-size:56px;
+    font-weight:800;
+    background:linear-gradient(
+        90deg,
+        #ff006e,
+        #ff4d6d,
+        #ff00c8,
+        #9d00ff,
+        #ff9e00,
+        #ff006e
+    );
+    background-size:300% 300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:
+        gradientShift 6s ease infinite,
+        glowPulse 2.5s ease-in-out infinite alternate,
+        titleScale 3s ease-in-out infinite alternate;
+    text-align:center;
+}
+@keyframes gradientShift{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+@keyframes glowPulse{
+    from{
+        text-shadow:
+            0 0 20px rgba(255,0,110,0.8),
+            0 0 40px rgba(255,0,200,0.6),
+            0 0 60px rgba(157,0,255,0.5);
+    }
+    to{
+        text-shadow:
+            0 0 35px rgba(255,0,110,1),
+            0 0 70px rgba(255,0,200,0.8),
+            0 0 100px rgba(157,0,255,0.7);
+    }
+}
+@keyframes titleScale{
+    from{ transform:scale(1); }
+    to{ transform:scale(1.05); }
+}
+
+/* Final Text */
+#typewriter{
+    margin-top:35px;
+    font-size:24px;
+    max-width:850px;
+    line-height:2;
+}
+
+/* ECG Monitor */
+.ecg-container{
+    position:absolute;
+    width:100%;
+    height:250px;
+    top:50%;
+    transform:translateY(-50%);
+    overflow:hidden;
+    z-index:-1;
+    opacity:0.6;
+}
+.ecg-line{
+    position:absolute;
+    width:200%;
+    height:100%;
+    animation:ecgScroll 6s linear infinite;
+}
+@keyframes ecgScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+}
+.ecg-line path{
+    fill:none;
+    stroke:#ff4d6d;
+    stroke-width:3;
+    filter:drop-shadow(0 0 10px #ff4d6d);
+}
+
+/* Continuous Heart Rain */
+.heart-rain{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:5;
+}
+.heart{
+    position:absolute;
+    font-size:24px;
+    animation:fall linear forwards;
+}
+@keyframes fall{
+    from{transform:translateY(-10vh) rotate(0deg);opacity:1;}
+    to{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<video class="bg" autoplay muted loop>
+<source src="https://cdn.pixabay.com/video/2022/10/19/135132-763748516_large.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+<div class="particles"></div>
+<div class="heart-rain"></div>
+
+<!-- Intro -->
+<div id="intro" class="screen active parallax">
+<div class="glass">
+<h1 style="font-size:38px;">For Someone Special 💖</h1>
+<p style="margin-top:15px;">Tell me your beautiful name</p>
+<input id="nameInput" placeholder="Enter name..."
+style="padding:12px;border-radius:12px;border:none;margin-top:15px;">
+<br>
+<button onclick="start()">Begin ✨</button>
+</div>
+</div>
+
+<!-- Gift -->
+<div id="giftScreen" class="screen parallax">
+<h1 id="personal" style="margin-bottom:30px;"></h1>
+<div class="gift" onclick="show('musicScreen')"></div>
+</div>
+
+<!-- Spotify -->
+<div id="musicScreen" class="screen parallax">
+<div class="spotify-card">
+<img src="https://i.scdn.co/image/ab67616d0000b273b1c8f11e9c7cdbaff342a641"
+width="260" style="border-radius:20px;">
+<h3 style="margin-top:20px;">Wanna Be Yours 💖</h3>
+<p>Arctic Monkeys</p>
+<iframe style="border-radius:15px;margin-top:15px"
+src="https://open.spotify.com/embed/track/5XeFesFbtLpXzIVDNQP22n"
+width="320" height="152"></iframe>
+<br>
+<button onclick="show('q1')">Continue 💘</button>
+</div>
+</div>
+
+<!-- Questions -->
+<div id="q1" class="screen parallax"><h2>Will you go on a date with me? 🌹</h2><button onclick="show('q2')">Yes 💘</button></div>
+<div id="q2" class="screen parallax"><h2>Will you be my Valentine? 💖</h2><button onclick="show('q3')">Always 💞</button></div>
+<div id="q3" class="screen parallax"><h2>Do you love me forever? 💞</h2><button onclick="show('q4')">Forever 🥰</button></div>
+<div id="q4" class="screen parallax"><h2>Are you my one and only? 🥰</h2><button onclick="showFinal()">Yes 💗</button></div>
+
+<!-- Final -->
+<div id="final" class="screen parallax">
+<div class="ecg-container">
+<div class="ecg-line">
+<svg viewBox="0 0 1000 200" preserveAspectRatio="none">
+<path d="M0 100 L80 100 L100 95 L120 105 L140 60 L160 150 L180 40 L200 100 L300 100 L380 95 L400 105 L420 60 L440 150 L460 40 L480 100 L1000 100"/>
+</svg>
+</div>
+</div>
+
+<h2>💖 I Love You Beyond Forever 💖</h2>
+<div id="typewriter"></div>
+</div>
+
+<script>
+
+function show(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+function start(){
+let name=document.getElementById("nameInput").value.trim();
+if(name==="") name="My Love";
+document.getElementById("personal").innerText =
+"🎁 " + name + ", this experience was created only for you...";
+show("giftScreen");
+}
+
+function showFinal(){
+show("final");
+startHeartRain();
+let text="From the very first moment you entered my life, the world felt different. Softer. Warmer. Brighter. You are not just my Valentine — you are the rhythm behind every beat of my heart. Like the pulse rising and falling behind these words, my heart rises when I see you, falls when I miss you, and beats endlessly because of you. In every lifetime, every universe, every possible story that could ever exist — I would still choose you. Always you. Forever you.";
+let i=0;
+function type(){
+if(i<text.length){
+document.getElementById("typewriter").innerHTML+=text.charAt(i);
+i++;setTimeout(type,28);
+}}
+type();
+}
+
+function startHeartRain(){
+setInterval(()=>{
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*25)+"px";
+heart.style.animationDuration=(4+Math.random()*4)+"s";
+document.querySelector(".heart-rain").appendChild(heart);
+setTimeout(()=>heart.remove(),8000);
+},450);
+}
+
+function particle(){
+const p=document.createElement("div");
+p.classList.add("particle");
+p.style.left=Math.random()*100+"vw";
+document.querySelector(".particles").appendChild(p);
+setTimeout(()=>p.remove(),12000);
+}
+setInterval(particle,300);
+
+document.addEventListener("mousemove",e=>{
+let x=(e.clientX/window.innerWidth-0.5)*15;
+let y=(e.clientY/window.innerHeight-0.5)*15;
+document.querySelectorAll(".parallax").forEach(el=>{
+el.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
+});
+});
+
+</script>
+
+</body>
+</html>
